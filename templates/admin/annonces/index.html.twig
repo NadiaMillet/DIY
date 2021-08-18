@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Annonces
+{% endblock %}
+
+{% block body %}
+	<h1 class="mt-5">Gérer les Annonces</h1>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Titre</th>
+				<th scope="col">Date</th>
+				<th scope="col">Active</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for annonce in annonces %}
+				<tr>
+					<td>{{annonce.id}}</td>
+					<td>{{annonce.title}}</td>
+					<td>{{annonce.createdAt|date('d/m/Y')}}</td>
+					<td>
+						<div class="form-check form-switch">
+
+							<input
+							class="form-check-input" {{ (annonce.active) ? 'checked' : ''}} data-id="{{annonce.id}}" type="checkbox" id="flexSwitchCheckDefault">
+						<!--annonce.active) ? 'checked' : '' -> vérifie si l'annonce est active, si oui = checked-->
+						</div>
+
+						<!--data-id -> ajax -> permet de savoir quelle annonce est active ou non par son id et permettra d'agir dessus par le biais du switch-->
+					</td>
+					<td
+						class="text-center">
+
+						<!-- Bouton modal -->
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSuppression">
+							Supprimer
+						</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="modalSuppression" tabindex="-1" aria-labelledby="modalSuppressionLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalSuppressionLabel">Suprimer l'anonce</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" data-id="{{annonce.id}}" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										Êtes-vous sûr de vouloir supprimer l'annonce
+										{{annonce.title}}
+										?
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+										<a href="{{ path("admin_annonces_supprimer", {id: annonce.id}) }}" class="btn btn-danger">Supprimer</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{asset('/js/switch.js') }}"></script>
+{% endblock %}

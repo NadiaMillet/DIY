@@ -70,7 +70,7 @@ class CategoriesController extends AbstractController
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_categories_home');
         }
         return $this->render('admin/categories/ajout.html.twig', [
             'form' => $form->createView()

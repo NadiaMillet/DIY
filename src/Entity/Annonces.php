@@ -92,7 +92,7 @@ class Annonces
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt()
     {
         return $this->created_at;
     }
