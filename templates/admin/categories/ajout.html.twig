@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout catégorie
+{% endblock %}
+
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+	<h1>Ajouter une catégorie</h1>
+	{{ form(form) }}{% endblock %}

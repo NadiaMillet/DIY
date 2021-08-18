@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification Profil
+{% endblock %}
+
+{% block body %}
+	<div class="mt-5">
+		<h1>Modifier mon profil</h1>
+		<div>
+
+			{% form_theme form 'bootstrap_4_layout.html.twig' %}
+			{{ form(form) }}
+
+			</div>
+		</div>
+	{% endblock %}

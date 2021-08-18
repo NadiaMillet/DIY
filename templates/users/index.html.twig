@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil
+{% endblock %}
+
+{% block body %}
+	<div class="mt-5">
+		{% for message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">{{ message }}</div>
+		{% endfor %}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success" role="alert">{{ message }}</div>
+		{% endfor %}
+		<p>Nom :
+			{{ app.user.name }}</p>
+		<p>Prénom :
+			{{ app.user.firstname }}</p>
+		<p>E-mail :
+			{{ app.user.email }}</p>
+		<a href="{{ path('users_profil_modifier') }}" class="btn btn-secondary">Modifier le profil</a>
+		<a href="{{ path('users_mdp_modifier') }}" class="btn btn-secondary">Modifier le mot de passe</a>
+		<div>
+			Annonces de
+			{{ app.user.firstname }}
+			{{ app.user.name }}
+			({{ app.user.annonces|length }})</div>
+		{% for annonce in app.user.annonces %}
+			<p>Titre :
+				{{ annonce.title }}</p>
+		{% endfor %}
+	</div>
+{% endblock %}
