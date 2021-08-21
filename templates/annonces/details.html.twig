@@ -4,15 +4,53 @@
 {% endblock %}
 
 {% block body %}
-
-	<div class="card" style="width: 18rem;">
-		<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
-		<div class="card-body">
-			<h5 class="card-title">{{annonce.title }}</h5>
-			<p class="card-text">Catégories :
-				{{ annonce.categories }}</p>
-			<p class="card-text">{{ annonce.content|u.truncate(100, '...')|raw  }}</p>
-			<a href="#" class="btn btn-primary">DIY!</a>
+	<div class="container">
+		{% for message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">{{ message }}</div>
+		{% endfor %}
+		<div></div>
+		<div class="card" style="width: 18rem;">
+			<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
+			<div class="card-body">
+				<h5 class="card-title">{{annonce.title }}</h5>
+				<p class="card-text">Catégories :
+					{{ annonce.categories }}</p>
+				<p class="card-text">{{ annonce.content|u.truncate(100, '...')|raw  }}</p>
+				<a href="#" class="btn btn-primary">DIY!</a>
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+					Envoyer un message
+				</button>
+			</div>
 		</div>
-	</div>
-{% endblock %}
+		<!-- Modal -->
+		<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="contactModalLabel">Contacter l'annonceur</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					{% form_theme form 'bootstrap_4_layout.html.twig' %}
+					{{ form_start(form) }}
+					<div class="modal-body">
+						{{ form_widget(form.title) }}
+						{{ form_row(form.email) }}
+						{{ form_row(form.message) }}
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success ">Envoyer</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	{% endblock %}
+
+	{% block javascripts %}
+		<script>
+			// #annonce_contact_title récupérer dans l'inspecteur
+window.onload = () => {
+document.querySelector("#annonce_contact_title").value = "{{ annonce.title|raw }}";
+}
+		</script>
+	{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact
+{% endblock %}
+
+{% block body %}
+	<div class="mt-5">
+		{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+		<h5 class="text-center my-5">Contacter DIY!</h5>
+
+		<div class="container-fluid d-flex justify-content-center mb-5 formulaire-contact">
+			<div class="border border-secondary p-5 col-8">
+				{% for message in app.flashes('message') %}
+					<div class="alert alert-success" role="alert">{{ message }}</div>
+				{% endfor %}
+				{{ form(form)}}
+					{{ form_end(form) }}
+				</div>
+			</div>
+		{% endblock %}

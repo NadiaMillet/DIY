@@ -3,22 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Form\ContactType;
 use App\Repository\AnnoncesRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DiyController extends AbstractController
 {
-    // /**
-    //  * @Route("/", name="app_home")
-    //  */
-    // public function index()
-    // {
-    //     return $this->render('diy/index.html.twig');
-    // }
+    /**
+     * @Route("/", name="app_home")
+     */
+    public function index()
+    {
+        return $this->render('diy/index.html.twig');
+    }
 
     /**
      * @Route("/", name="app_home")
@@ -52,6 +55,48 @@ class DiyController extends AbstractController
         return $this->render(
             'annonces/details.html.twig',
             compact('annonce')
+        );
+    }
+
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contact(Request $request, MailerInterface $mailerInterface)
+    {
+
+        $form = $this->createForm(ContactType::class);
+
+        $contact = $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $email = (new TemplatedEmail())
+                // récupère la donnée 'email' lors de la soumission du formulaire stockée dans $contact
+                ->from($contact->get('email')->getData())
+                // envoi à la donnée email récupérer dans user 
+                ->to('contact@diy.fr')
+                ->subject('Nouveau contact DIY!')
+                ->htmlTemplate('diy/email.html.twig')
+                // envoi de toutes les variables à utiliser dans le twig
+                ->context([
+                    // /!\ $email est une variable réservée = utiliser autre $
+                    'nom' => $contact->get('nom')->getData(),
+                    'prenom' => $contact->get('prenom')->getData(),
+                    'objet' => $contact->get('objet')->getData(),
+                    'tel' => $contact->get('tel')->getData(),
+                    'mail' => $contact->get('email')->getData(),
+                    'message' => $contact->get('message')->getData()
+                ]);
+            $mailerInterface->send($email);
+
+            $this->addFlash('message', 'Votre message à bien été envoyé');
+            return $this->redirectToRoute('contact');
+        }
+        return $this->render(
+            'diy/contact.html.twig',
+            [
+                'form' => $form->createView()
+            ]
         );
     }
 }

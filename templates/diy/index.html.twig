@@ -39,10 +39,9 @@
 						</p>
 					{% endfor %}
 				{% endif %}
-
-
-				<a href="{{path('details' , {slug: annonce.slug}) }}" class="btn btn-primary">DIY!</a>
+				<a href="{{path('annonces_details' , {slug: annonce.slug}) }}" class="btn btn-primary">DIY!</a>
 			</div>
 		</div>
 	{% endfor %}
+
 {% endblock %}
