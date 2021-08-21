@@ -20,13 +20,39 @@
 		<a href="{{ path('users_profil_modifier') }}" class="btn btn-secondary">Modifier le profil</a>
 		<a href="{{ path('users_mdp_modifier') }}" class="btn btn-secondary">Modifier le mot de passe</a>
 		<div>
-			Annonces de
-			{{ app.user.firstname }}
-			{{ app.user.name }}
-			({{ app.user.annonces|length }})</div>
+			<h2>Annonces de
+				{{ app.user.firstname }}
+				{{ app.user.name }}
+				({{ app.user.annonces|length }})</h2>
+		</div>
+		<a href="{{ path('users_annonces_ajout') }}" class="btn btn-success">Ajouter une annonce</a>
 		{% for annonce in app.user.annonces %}
 			<p>Titre :
 				{{ annonce.title }}</p>
 		{% endfor %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Titre</th>
+					<th scope="col">Catégorie</th>
+					<th scope="col">Content</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for annonce in app.user.annonces %}
+					<tr>
+						<td>{{annonce.title}}</td>
+						<td>{{annonce.categories}}</td>
+						<td>{{annonce.content|u.truncate(100, '...')|raw  }}</td>
+						<td class="text-center">
+							<a href="{{ path("users_annonces_editer", {id: annonce.id}) }}" class="btn btn-primary">Modifier</a>
+							<a href="{{ path("users_annonce_supprimer", {id: annonce.id}) }}" class="btn btn-danger">Supprimer</a>
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}

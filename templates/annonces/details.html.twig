@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DIY! - Plateforme d'ateliers créatifs
+{% endblock %}
+
+{% block body %}
+
+	<div class="card" style="width: 18rem;">
+		<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
+		<div class="card-body">
+			<h5 class="card-title">{{annonce.title }}</h5>
+			<p class="card-text">Catégories :
+				{{ annonce.categories }}</p>
+			<p class="card-text">{{ annonce.content|u.truncate(100, '...')|raw  }}</p>
+			<a href="#" class="btn btn-primary">DIY!</a>
+		</div>
+	</div>
+{% endblock %}

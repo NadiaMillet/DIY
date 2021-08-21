@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class AnnoncesType extends AbstractType
 {
@@ -23,6 +24,26 @@ class AnnoncesType extends AbstractType
             ->add('categories', EntityType::class, [
                 'class' => Categories::class
             ])
+            ->add(
+                'img1',
+                FileType::class,
+                array('data_class' => null),
+
+                [
+                    'mapped' => false,
+                    'required' => false,
+                    // 'constraints' => [
+                    //     'mimeTypes' => [
+                    //         'application/png',
+                    //         'application/jpeg',
+                    //     ]
+                    // ]
+
+                    'label' => "Ajouter l'image de mise en avant"
+                ]
+            )
+            ->add('img2', FileType::class, array('data_class' => null), ['label' => 'Ajouter une seconde image'])
+            ->add('img3', FileType::class, array('data_class' => null), ['label' => 'Ajouter une troisième image'])
             ->add('Valider', SubmitType::class);
     }
 
