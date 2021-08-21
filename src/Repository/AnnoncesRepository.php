@@ -19,6 +19,41 @@ class AnnoncesRepository extends ServiceEntityRepository
         parent::__construct($registry, Annonces::class);
     }
 
+    /**
+     * Gestion formulaire de recherche
+     * @return void
+     */
+    public function search($mots = null, $categorie = null)
+    {
+        # $mots = mots de la recherche reçue
+
+        # QueryBuilder fournit une API conçue pour la construction conditionnelle d'une requête DQL en plusieurs étapes. Il fournit un ensemble de classes et de méthodes capables de créer des requêtes par programmation, ainsi qu'une API fluide.
+        # 'a' = annonces
+        $query = $this->createQueryBuilder('a');
+
+        # requête where, ici pour viser seulement les requête active (1 / true)
+        $query->where('a.active = 1');
+
+
+        if ($mots != null) {
+
+            # andwhere = where supplémentaire
+            # MATCH_AGAINST = appel de la méthode configurée dans doctrine.yaml > Indication des champs > Indicatio termes de recherche et si réponse à la requête (>0 / true)
+            $query->andWhere('MATCH_AGAINST(a.title , a.content) AGAINST(:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+        if ($categorie != null) {
+            #  commande slq leftJoin est un type de jointure entre 2 tables, ici colonne categories_id de la table annonces et la table categories
+            $query->leftJoin('a.categories', 'c');
+            # vérifie si les id de la catégorie se correspondent
+            $query->andWhere('c.id = :id')
+                #setparameter protège des injections SQL        
+                ->setParameter('id', $categorie);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Annonces[] Returns an array of Annonces objects
     //  */

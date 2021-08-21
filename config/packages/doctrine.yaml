@@ -16,3 +16,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
+        # Déclaration de la méthode pour la recherche fulltext
+        # Doctrine query language
+        dql:
+            #fonctions de doctrine pour la gestion des caractères 
+            string_functions:
+                MATCH_AGAINST: App\Extensions\Doctrine\MatchAgainst
+

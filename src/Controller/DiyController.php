@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Form\ContactType;
+use App\Form\RechercheType;
 use App\Repository\AnnoncesRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,18 +16,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiyController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_home")
-     */
-    public function index()
-    {
-        return $this->render('diy/index.html.twig');
-    }
+    // /**
+    //  * @Route("/", name="app_home")
+    //  */
+    // public function index()
+    // {
+
+
+    //     // if ($form->isSubmitted() && $form->isValid()) {}
+
+
+    //     return $this->render('diy/index.html.twig', []);
+    // }
+
+    // Affichage des 8 dernières annonces à l'accueil
+    // Gestion formulaire de recherche
 
     /**
      * @Route("/", name="app_home")
      */
-    public function aperçuAnnonce()
+    public function aperçuAnnonce(Request $request, AnnoncesRepository $annoncesRepository)
     {
         // $repository = variable par défaut symfony visant la class voulu
         // get Repository va aller au niveau des données dans la table précisée
@@ -34,10 +43,24 @@ class DiyController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Annonces::class);
         // a ce stade il a accès au données
         // je veux stocker dans la variable $selections TOUT mes selections
-        $annonces = $repository->findBy(['active' => true], ['created_at' => 'desc'], 8);
+        $annonces = $annoncesRepository->findBy(['active' => true], ['created_at' => 'desc'], 8);
         //La méthode findAll() retourne toutes les entités. Le format du retour est un simple Array, que vous pouvez parcourir (avec un foreach par exemple) pour utiliser les objets qu'il contient
         // entre guillmet c'est le nom utilisé sur Twig
-        return $this->render('diy/index.html.twig', ['annonces' => $annonces]);
+
+        $form = $this->createForm(RechercheType::class);
+
+        $search = $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Appel méthide repository
+
+            $annonces = $annoncesRepository->search(
+                $search->get('mots')->getData(),
+                $search->get('categorie')->getData()
+            );
+        }
+
+        return $this->render('diy/index.html.twig', ['annonces' => $annonces, 'form' => $form->createView()]);
     }
 
 
