@@ -28,10 +28,14 @@ class AnnoncesController extends AbstractController
         PaginatorInterface $paginatorInterface,
         Request $request
     ) {
+        // stock dans $data toutes les annonces
         $data = $annoncesRepository->findAll();
 
+        // stock le résultat de la pagination dans $annonces qui ne contiendra que les annonces de la page que l'on appel
+        // appel de la méthode par défaur propore au bundle knp = paginate( 1.données, ici les annonces 2.Savoir où il en est et en INTEGER = page rendra une valeur numérique, si null page=1 = /annonces/?page=1 3.Nombres d'éléments par page) 
         $annonces = $paginatorInterface->paginate(
             $data,
+            // Cherche dans la requête un integer stocké dans ce qui va s'appeler 'page'
             $request->query->getInt('page', 1),
             1
 

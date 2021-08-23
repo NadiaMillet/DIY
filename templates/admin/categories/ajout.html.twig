@@ -2,9 +2,11 @@
 
 {% block title %}Ajout catégorie
 {% endblock %}
-
-
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
+	{% for message in app.flashes('message') %}
+		<div class="alert alert-success" role="alert">{{ message }}</div>
+	{% endfor %}
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 	<h1>Ajouter une catégorie</h1>
 	{{ form(form) }}{% endblock %}
