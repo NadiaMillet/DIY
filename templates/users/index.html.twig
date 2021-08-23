@@ -36,6 +36,7 @@
 					<th scope="col">Titre</th>
 					<th scope="col">Catégorie</th>
 					<th scope="col">Content</th>
+					<th scope="col">Image</th>
 					<th scope="col">Action</th>
 				</tr>
 			</thead>
@@ -45,6 +46,13 @@
 						<td>{{annonce.title}}</td>
 						<td>{{annonce.categories}}</td>
 						<td>{{annonce.content|u.truncate(100, '...')|raw  }}</td>
+
+						<td>
+
+							<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('mini') }}" class="card-img-top" alt="{{annonce.title}}">
+
+						</td>
+
 						<td class="text-center">
 							<a href="{{ path("users_annonces_editer", {id: annonce.id}) }}" class="btn btn-primary">Modifier</a>
 							<a href="{{ path("users_annonce_supprimer", {id: annonce.id}) }}" class="btn btn-danger">Supprimer</a>

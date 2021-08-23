@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Annonces;
 use App\Form\AnnonceContactType;
 use App\Repository\AnnoncesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,37 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AnnoncesController extends AbstractController
 {
+    /**
+     * @Route("/", name="liste")
+     */
+    public function index(
+        AnnoncesRepository $annoncesRepository,
+        PaginatorInterface $paginatorInterface,
+        Request $request
+    ) {
+        $data = $annoncesRepository->findAll();
+
+        $annonces = $paginatorInterface->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            1
+
+        );
+
+        // (int) le dump retournant un string, on force la fonction à retourner un int
+        // on attribut une valeur par défaut => diy.fr/annonces/page=1
+        // $page = (int)$request->query->get("page", 1);
+
+        // $annonces = $annoncesRepository->getPaginatedAnnonces($page, $limit);
+
+        return $this->render(
+            'annonces/index.html.twig',
+            ['annonces' => $annonces]
+        );
+    }
+
+
+    /// Afficher une annonce page unique ////
     /**
      * @Route("/details/{slug}", name="details")
      */
