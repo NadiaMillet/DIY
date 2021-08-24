@@ -19,35 +19,62 @@
 				</button>
 			</div>
 		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="contactModalLabel">Contacter l'annonceur</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					{% form_theme form 'bootstrap_4_layout.html.twig' %}
-					{{ form_start(form) }}
-					<div class="modal-body">
-						{{ form_widget(form.title) }}
-						{{ form_row(form.email) }}
-						{{ form_row(form.message) }}
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success ">Envoyer</button>
-					</div>
+		<div>
+			<h2>Commentaires :</h2>
+			{% for comment in annonce.comments %}
+				<h3>Commentaire de
+					{{comment.nickname}}</h3>
+				<p>Publié le
+					{{comment.createdAt|date("d/m/Y H:i") }}</p>
+				<div>{{comment.content}}</div>
+				<p>
+					<a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn primary press">Répondre</a>
+				</p>
+			{% endfor %}
+		</div>
+		<div id="ajout-commentaire">
+			<h2>Ajouter un Commentaire</h2>
+			{% for message in app.flashes('message') %}
+				<div class="alert alert-success" role="alert">
+					{{ message }}
 				</div>
-				{{ form_end(form) }}
+			{% endfor %}
+			{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+			{{ form(commentForm) }}
+			</div>
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="contactModalLabel">Contacter l'annonceur</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						{% form_theme form 'bootstrap_4_layout.html.twig' %}
+						{{ form_start(form) }}
+						<div class="modal-body">
+							{{ form_widget(form.title) }}
+							{{ form_row(form.email) }}
+							{{ form_row(form.message) }}
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success ">Envoyer</button>
+						</div>
+					</div>
+					{{ form_end(form) }}
+				</div>
 			</div>
 		</div>
-	{% endblock %}
+	</div>
+{% endblock %}
 
-	{% block javascripts %}
-		<script>
-			// #annonce_contact_title récupérer dans l'inspecteur
+{% block javascripts %}
+	<script>
+		// #annonce_contact_title récupérer dans l'inspecteur
 window.onload = () => {
 document.querySelector("#annonce_contact_title").value = "{{ annonce.title|raw }}";
 }
-		</script>
-	{% endblock %}
+	</script>
+{% endblock %}

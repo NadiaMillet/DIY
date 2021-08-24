@@ -84,6 +84,16 @@ class Annonces
      * @ORM\Column(type="string", length=255)
      */
     private $img3;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="annonces", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
     // // L'on précise ce qui doit se passer au moment d'un persiste de l'image. Au moment de la création de l'annonces, des données doivent également être injectées dans la table images
     // public function __construct()
     // {
@@ -254,6 +264,36 @@ class Annonces
     public function setImg3($img3)
     {
         $this->img3 = $img3;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAnnonces($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAnnonces() === $this) {
+                $comment->setAnnonces(null);
+            }
+        }
 
         return $this;
     }

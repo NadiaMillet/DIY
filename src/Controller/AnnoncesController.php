@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Entity\Comments;
 use App\Form\AnnonceContactType;
+use App\Form\CommentsType;
 use App\Form\RechercheType;
 use App\Repository\AnnoncesRepository;
+use DateTime;
+use DateTimeImmutable;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -106,11 +110,37 @@ class AnnoncesController extends AbstractController
             return $this->redirectToRoute('annonces_details', ['slug' => $annonce->getSlug()]);
         }
 
+        // Gestion des commentaires
+
+        // Création objet commentaire 
+        $comment = new Comments;
+
+        $commentForm = $this->createForm(CommentsType::class, $comment);
+
+        $commentForm->handleRequest($request);
+
+        // Traitement du formulaire
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setCreatedAt(new DateTimeImmutable());
+            $comment->setAnnonces($annonce);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+
+            $this->addFlash('message', 'Votre commentaire à bien été envoyé et est en attente de modération');
+            return $this->redirectToRoute('annonces_details', [
+                'slug' => $annonce->getSlug()
+            ]);
+        }
+
+
         return $this->render(
             'annonces/details.html.twig',
             [
                 'annonce' => $annonce,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'commentForm' => $commentForm->createView()
             ]
         );
     }
