@@ -11,7 +11,7 @@
 
 		{# {% if app.request.attributes.get('_route') == 'users_annonces_editer' %} #}
 		<h2>Images</h2>
-		{% for annonce in annonces %}
+		{% for annonces in annonce %}
 			<div>
 				<div class="col"><img src="{{asset('/uploads/images/' ~ annonce.img1) }}" class="img-thumbnail" alt="..."></div>
 				<div class="col"><img src="{{asset('/uploads/images/' ~ annonce.img2) }}" class="img-thumbnail" alt="..."></div>

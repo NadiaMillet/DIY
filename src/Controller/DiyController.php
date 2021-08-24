@@ -63,6 +63,37 @@ class DiyController extends AbstractController
         return $this->render('diy/index.html.twig', ['annonces' => $annonces, 'form' => $form->createView()]);
     }
 
+    /**
+     * @Route("/a", name="home")
+     */
+    public function recherche(Request $request, AnnoncesRepository $annoncesRepository)
+    {
+        // $repository = variable par défaut symfony visant la class voulu
+        // get Repository va aller au niveau des données dans la table précisée
+        // SELECT query
+        $repository = $this->getDoctrine()->getRepository(Annonces::class);
+        // a ce stade il a accès au données
+        // je veux stocker dans la variable $selections TOUT mes selections
+        $annonces = $annoncesRepository->findBy(['active' => true], ['created_at' => 'desc'], 8);
+        //La méthode findAll() retourne toutes les entités. Le format du retour est un simple Array, que vous pouvez parcourir (avec un foreach par exemple) pour utiliser les objets qu'il contient
+        // entre guillmet c'est le nom utilisé sur Twig
+
+        $form = $this->createForm(RechercheType::class);
+
+        $search = $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Appel méthide repository
+
+            $annonces = $annoncesRepository->search(
+                $search->get('mots')->getData(),
+                $search->get('categorie')->getData()
+            );
+        }
+
+        return $this->render('base.html.twig', ['annonces' => $annonces, 'form' => $form->createView()]);
+    }
+
 
     /**
      * @Route("/details/{slug}", name="details")

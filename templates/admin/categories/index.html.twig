@@ -4,29 +4,57 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="mt-5">Gérer les Catégories</h1>
-	<a href="{{ path("admin_categories_ajout") }}" class="btn btn-secondary">Ajouter une catégorie</a>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Nom</th>
-				<th scope="col">Parent</th>
-				<th scope="col">Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for categorie in categories %}
+	<div class="container">
+		<h1 class="my-5">Gérer les Catégories</h1>
+		<a href="{{ path("admin_categories_ajout") }}" class="btn btn-secondary">Ajouter une catégorie</a>
+		<table class="table table-striped my-3">
+			<thead>
 				<tr>
-					<td>{{categorie.id}}</td>
-					<td>{{categorie.name}}</td>
-					<td>{{categorie.parent}}</td>
-					<td class="text-center">
-						<a href="{{ path("admin_categories_modifier", {id: categorie.id}) }}" class="btn btn-primary">Modifier</a>
-					</td>
+					<th scope="col">ID</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Parent</th>
+					<th scope="col" class="text-center">Action</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<a href="{{ path("admin_categories_ajout") }}" class="btn btn-secondary">Ajouter une catégorie</a>
+			</thead>
+			<tbody>
+				{% for categorie in categories %}
+					<tr>
+						<td>{{categorie.id}}</td>
+						<td>{{categorie.name}}</td>
+						<td>{{categorie.parent}}</td>
+						<td class="text-center">
+							<a href="{{ path("admin_categories_modifier", {id: categorie.id}) }}" class="btn btn-primary">Modifier</a>
+							<!-- Bouton modal -->
+							<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalSuppression">
+								Supprimer
+							</button>
+
+							<!-- Modal -->
+							<div class="modal fade" id="modalSuppression" tabindex="-1" aria-labelledby="modalSuppressionLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalSuppressionLabel">Suprimer la catégorie</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" data-id="{{categorie.id}}" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Êtes-vous sûr de vouloir supprimer la catégorie
+											{{categorie.name}}
+											?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+											<a href="{{ path("admin_categories_supprimer", {id: categorie.id}) }}" class="btn btn-danger">Supprimer</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path("admin_categories_ajout") }}" class="btn btn-secondary">Ajouter une catégorie</a>
+	</div>
 {% endblock %}

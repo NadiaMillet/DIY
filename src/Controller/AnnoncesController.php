@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Form\AnnonceContactType;
+use App\Form\RechercheType;
 use App\Repository\AnnoncesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -28,8 +29,23 @@ class AnnoncesController extends AbstractController
         PaginatorInterface $paginatorInterface,
         Request $request
     ) {
+        $repository = $this->getDoctrine()->getRepository(Annonces::class);
+
         // stock dans $data toutes les annonces
         $data = $annoncesRepository->findAll();
+
+        $form = $this->createForm(RechercheType::class);
+
+        $search = $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Appel méthide repository
+
+            $data = $annoncesRepository->search(
+                $search->get('mots')->getData(),
+                $search->get('categorie')->getData()
+            );
+        }
 
         // stock le résultat de la pagination dans $annonces qui ne contiendra que les annonces de la page que l'on appel
         // appel de la méthode par défaur propore au bundle knp = paginate( 1.données, ici les annonces 2.Savoir où il en est et en INTEGER = page rendra une valeur numérique, si null page=1 = /annonces/?page=1 3.Nombres d'éléments par page) 
@@ -41,15 +57,12 @@ class AnnoncesController extends AbstractController
 
         );
 
-        // (int) le dump retournant un string, on force la fonction à retourner un int
-        // on attribut une valeur par défaut => diy.fr/annonces/page=1
-        // $page = (int)$request->query->get("page", 1);
-
-        // $annonces = $annoncesRepository->getPaginatedAnnonces($page, $limit);
-
         return $this->render(
             'annonces/index.html.twig',
-            ['annonces' => $annonces]
+            [
+                'annonces' => $annonces,
+                'form' => $form->createView()
+            ]
         );
     }
 

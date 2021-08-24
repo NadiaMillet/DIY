@@ -3,8 +3,10 @@ window.onload = () => {
     for (let bouton of activer) {
         bouton.addEventListener("click", function () {
             let xmlhttp = new XMLHttpRequest;
-            xmlhttp.open("get", `/admin/annonces/activer/${this.dataset.id}`)
+            xmlhttp.open("get", `/admin/annonces/activer/${this.dataset.id
+                }`)
             xmlhttp.send()
         })
     }
+
 }

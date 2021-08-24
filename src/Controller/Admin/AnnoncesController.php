@@ -21,8 +21,9 @@ class AnnoncesController extends AbstractController
      */
     public function index(AnnoncesRepository $annoncesRepository)
     {
+        $annonces = $annoncesRepository->findAll();
         return $this->render('admin/annonces/index.html.twig', [
-            'annonces' => $annoncesRepository->findAll(),
+            'annonces' => $annonces
         ]);
     }
 

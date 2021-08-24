@@ -4,11 +4,8 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="container">
-		{% for message in app.flashes('message') %}
-			<div class="alert alert-success" role="alert">{{ message }}</div>
-		{% endfor %}
-		<div></div>
 		<div class="card" style="width: 18rem;">
 			<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
 			<div class="card-body">

@@ -24,28 +24,4 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-
-    /**
-     * @Route("/categories/ajout", name="categories_ajout")
-     */
-    public function ajoutCategorie(Request $request)
-    {
-        $categorie = new Categories;
-
-        $form = $this->createForm(CategoriesType::class, $categorie);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($categorie);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_home');
-        }
-        return $this->render('admin/categories/ajout.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
 }
