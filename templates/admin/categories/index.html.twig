@@ -5,6 +5,11 @@
 
 {% block body %}
 	<div class="container">
+		{% for message in app.flashes('message') %}
+			<div class="alert alert-success" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
 		<h1 class="my-5">Gérer les Catégories</h1>
 		<a href="{{ path("admin_categories_ajout") }}" class="btn btn-secondary">Ajouter une catégorie</a>
 		<table class="table table-striped my-3">

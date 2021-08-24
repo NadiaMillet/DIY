@@ -8,7 +8,6 @@ use App\Form\AnnonceContactType;
 use App\Form\CommentsType;
 use App\Form\RechercheType;
 use App\Repository\AnnoncesRepository;
-use DateTime;
 use DateTimeImmutable;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -128,7 +127,7 @@ class AnnoncesController extends AbstractController
             $em->persist($comment);
             $em->flush();
 
-            $this->addFlash('message', 'Votre commentaire à bien été envoyé et est en attente de modération');
+            $this->addFlash('message', 'Votre commentaire à bien été envoyé');
             return $this->redirectToRoute('annonces_details', [
                 'slug' => $annonce->getSlug()
             ]);
@@ -149,7 +148,7 @@ class AnnoncesController extends AbstractController
     /**
      * @Route("/favoris/ajout/{id}", name="ajout_favoris")
      */
-    public function ajoutFavoris(Annonces $annonce)
+    public function ajoutFavoris(Annonces $annonce, Request $request)
     {
 
         if (!$annonce) {
@@ -160,14 +159,15 @@ class AnnoncesController extends AbstractController
         $em->persist($annonce);
         $em->flush();
 
-        return $this->redirectToRoute('app_home');
-    }
 
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
     //// Retrait d'une annonce en favoris /////
     /**
      * @Route("/favoris/retrait/{id}", name="retrait_favoris")
      */
-    public function retraitFavoris(Annonces $annonce)
+    public function retraitFavoris(Annonces $annonce, Request $request)
     {
 
         if (!$annonce) {
@@ -178,6 +178,7 @@ class AnnoncesController extends AbstractController
         $em->persist($annonce);
         $em->flush();
 
-        return $this->redirectToRoute('app_home');
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }

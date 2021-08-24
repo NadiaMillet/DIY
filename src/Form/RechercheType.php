@@ -35,7 +35,10 @@ class RechercheType extends AbstractType
             ])
             ->add(
                 'Rechercher',
-                SubmitType::class
+                SubmitType::class,
+                [
+                    'attr' => ['class' => 'btn-envoyer',]
+                ]
             );
     }
 

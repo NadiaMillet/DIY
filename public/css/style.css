@@ -1,0 +1,81 @@
+/******** VARIABLES *****/
+:root{
+       --turquoise: rgb(134, 175, 172);
+}
+ 
+
+/******** COMMUN ********/
+
+h1{
+    font-family: 'Lily Script One', cursive;
+    font-size: 60px;
+}
+p{
+    font-family: 'Montserrat', sans-serif;
+    line-height: 2rem;
+}
+
+/* Tous les boutons du site hors boutons d'envoi de formulaire */
+.btn-front{
+    border: solid black 1px;
+    border-radius: 0;
+    transition: all 0.3s;
+}
+.btn-front:hover{
+    transform: scale(1.1,1.1);
+    background-color: var(--turquoise);
+}
+
+/* Boutons d'envoi de fomulaire */
+.btn-envoyer{
+    border: solid black 1px;
+    border-radius: 0;
+    transition: all 0.3s;
+}
+.btn-envoyer:hover{
+    transform: scale(1.1,1.1);
+    background-color: var(--turquoise);
+}
+
+/* Tous les formulaires */
+.form-control{
+    border-radius: 0px;
+    margin-bottom: 5px;
+}
+
+/******** ANNONCES ******/
+
+/* Page de Vue détaillée des annonces */
+.categorie_title{
+    font-family: 'Poiret One', cursive;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+/* Icone ajout au favoris sur tout le site */
+.fa-heart{
+    font-size: 30px;
+    transition: all 0.3s;
+    color: black;
+    margin: 0px 15px 0px 15px;
+}
+.fa-heart:hover{
+    transform: scale(1.2,1.2);
+}
+.fas{
+color: var(--turquoise);
+}
+
+/* Aperçu annonce (card) */
+.card-text-categorie{
+    font-family: 'Poiret One', cursive;
+    font-size: 18px;
+    font-weight: 900;
+}
+.card-title{
+    font-family: 'Lily Script One', cursive;
+    font-size: 30px;
+}
+.card-text{
+    font-size: 15px;
+}

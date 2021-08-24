@@ -61,11 +61,6 @@ class Annonces
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="annonces", orphanRemoval=true, cascade={"persist"})
-     */
-    private $images;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Users::class, inversedBy="favoris")
      */
     private $favoris;
@@ -177,36 +172,6 @@ class Annonces
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection|Images[]
-    //  */
-    // public function getImages(): Collection
-    // {
-    //     return $this->images;
-    // }
-
-    // public function addImage(Images $image): self
-    // {
-    //     if (!$this->images->contains($image)) {
-    //         $this->images[] = $image;
-    //         $image->setAnnonces($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeImage(Images $image): self
-    // {
-    //     if ($this->images->removeElement($image)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($image->getAnnonces() === $this) {
-    //             $image->setAnnonces(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     /**
      * @return Collection|Users[]

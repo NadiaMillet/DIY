@@ -18,8 +18,6 @@ liip_imagine:
         banniere:
             quality: 80
             filters:
-                upscale:
-                    min: [800, 400]
                 thumbnail:
-                    size: [800, 400]
+                    size: [1000, 600]
                     mode: outbound

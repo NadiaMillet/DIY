@@ -4,14 +4,11 @@
 {% endblock %}
 {% block body %}
 	<div class="container">
-		{% for message in app.flashes('message') %}
-			<div class="alert alert-success" role="alert">
-				{{ message }}
-			</div>
-		{% endfor %}
+
 		{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 		<h1>Ajouter une catégorie</h1>
 		{{ form(form) }}
+			<a href="{{path("admin_categories_home")}}" class="btn btn-secondary mt-3">Retour à la liste des catégories</a>
 		</div>
 	{% endblock %}

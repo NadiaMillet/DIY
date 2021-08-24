@@ -19,26 +19,35 @@ class CommentsType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Votre e-mail',
+                'label' => false,
                 'attr' => [
+                    'placeholder' => 'E-mail',
                     'class' => 'form-control'
                 ]
             ])
             ->add('nickname', TextType::class, [
-                'label' => 'Votre Pseudo',
+                'label' => false,
                 'attr' => [
+                    'placeholder' => 'Pseudo',
                     'class' => 'form-control'
                 ]
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Votre Commentaire',
+                'label' => false,
                 'attr' => [
+                    'placeholder' => 'Commentaire',
                     'class' => 'form-control'
                 ]
             ])
-            ->add('rgpd', CheckboxType::class)
+            ->add('rgpd', CheckboxType::class, [
+                'label' => 'En cochant cette case, vous acceptez le traitement de vos donées',
+            ])
 
-            ->add('Envoyer', SubmitType::class);
+            ->add('Envoyer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn-envoyer'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

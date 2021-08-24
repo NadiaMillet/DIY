@@ -6,75 +6,154 @@
 {% block body %}
 
 	<div class="container">
-		<div class="card" style="width: 18rem;">
-			<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
-			<div class="card-body">
-				<h5 class="card-title">{{annonce.title }}</h5>
-				<p class="card-text">Catégories :
-					{{ annonce.categories }}</p>
-				<p class="card-text">{{ annonce.content|u.truncate(100, '...')|raw  }}</p>
-				<a href="#" class="btn btn-primary">DIY!</a>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
-					Envoyer un message
-				</button>
-			</div>
-		</div>
-		<div>
-			<h2>Commentaires :</h2>
-			{% for comment in annonce.comments %}
-				<h3>Commentaire de
-					{{comment.nickname}}</h3>
-				<p>Publié le
-					{{comment.createdAt|date("d/m/Y H:i") }}</p>
-				<div>{{comment.content}}</div>
-				<p>
-					<a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn primary press">Répondre</a>
-				</p>
-			{% endfor %}
-		</div>
-		<div id="ajout-commentaire">
-			<h2>Ajouter un Commentaire</h2>
-			{% for message in app.flashes('message') %}
-				<div class="alert alert-success" role="alert">
-					{{ message }}
-				</div>
-			{% endfor %}
-			{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
-			{{ form(commentForm) }}
-			</div>
-
-
-			<!-- Modal -->
-			<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="contactModalLabel">Contacter l'annonceur</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		<div class="row d-flex align-items-center">
+			<div class="col">
+				<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('banniere') }}" alt="{{annonce.title}}">
 						</div>
-						{% form_theme form 'bootstrap_4_layout.html.twig' %}
-						{{ form_start(form) }}
-						<div class="modal-body">
-							{{ form_widget(form.title) }}
-							{{ form_row(form.email) }}
-							{{ form_row(form.message) }}
+						<div class="carousel-item">
+							<img src="{{ asset('uploads/images/' ~ annonce.img2)|imagine_filter('banniere') }}" alt="{{annonce.title}}">
 						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-success ">Envoyer</button>
+						<div class="carousel-item">
+							<img src="{{ asset('uploads/images/' ~ annonce.img3)|imagine_filter('banniere') }}" alt="{{annonce.title}}">
 						</div>
 					</div>
-					{{ form_end(form) }}
 				</div>
 			</div>
-		</div>
-	</div>
-{% endblock %}
+			<div class="col">
+				<h1>{{annonce.title }}</h1>
+				<h2 class="categorie_title mb-5">
+					Catégorie :
+					{{ annonce.categories }}
+				</h2>
+				<a type="button" class="btn btn-front" data-bs-toggle="modal" data-bs-target="#contactModal">
+					Envoyer un message
+				</a>
 
-{% block javascripts %}
-	<script>
-		// #annonce_contact_title récupérer dans l'inspecteur
+				<!-- AJOUT AU FAVORIS -->
+				{% if is_granted("ROLE_USER") %}
+					{% for favoris in annonce.favoris %}
+						{% if favoris.id == app.user.id %}
+							<a href="{{ path('annonces_retrait_favoris', {id: annonce.id}) }}">
+								<i class="far fa-heart"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+								<i class="fas fa-heart"></i>
+							</a>
+						{% endif %}
+					{% else %}
+						<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+							<i class="fas fa-heart"></i>
+						</a>
+					{% endfor %}
+				{% endif %}
+				<!-- FIN AJOUT AU FAVORIS -->
+			</div>
+		</div>
+
+		<div class="mt-5 border-top border-secondary">
+			<h3 class="description_title mt-3">
+				Description
+			</h3>
+			<p class="card-text">{{ annonce.content|raw  }}</p>
+
+			<p class="card-text text-center">
+				<a type="button" class="btn btn-front" data-bs-toggle="modal" data-bs-target="#contactModal">
+					Envoyer un message
+				</a>
+				<!-- AJOUT AU FAVORIS -->
+				{% if is_granted("ROLE_USER") %}
+					{% for favoris in annonce.favoris %}
+						{% if favoris.id == app.user.id %}
+							<a href="{{ path('annonces_retrait_favoris', {id: annonce.id}) }}">
+								<i class="far fa-heart"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+								<i class="fas fa-heart"></i>
+							</a>
+						{% endif %}
+					{% else %}
+						<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+							<i class="fas fa-heart"></i>
+						</a>
+					{% endfor %}
+				{% endif %}
+				<!-- FIN AJOUT AU FAVORIS -->
+			</p>
+		</div>
+		<div class="mt-5 border-top border-secondary">
+			<div
+				class="row">
+				<!-- LISTE DES COMMENTAIRES -->
+				<div class="col">
+					<h2 class="categorie_title mt-3">Avis</h2>
+					{% for comment in annonce.comments %}
+						<div class="border-bottom border-secondary">
+							<p>
+								<i class="far fa-comment"></i>
+								{{comment.nickname}}
+							</p>
+							<p>
+								{{comment.content}}
+							</p>
+							<p>
+								Publié le
+								{{comment.createdAt|date("d/m/Y H:i") }}
+							</p>
+						</div>
+					{% endfor %}
+				</div>
+				<!-- FIN LISTE DES COMMENTAIRES -->
+				<div class="col">
+					<div id="ajout-commentaire">
+						<h2 class="categorie_title mt-3">Ajouter un Commentaire</h2>
+						{% for message in app.flashes('message') %}
+							<div class="alert alert-success" role="alert">
+								{{ message }}
+							</div>
+						{% endfor %}
+						{% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+						{{ form(commentForm) }}
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="contactModalLabel">Contacter l'annonceur</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									{% form_theme form 'bootstrap_4_layout.html.twig' %}
+									{{ form_start(form) }}
+									<div class="modal-body">
+										{{ form_widget(form.title) }}
+										{{ form_row(form.email) }}
+										{{ form_row(form.message) }}
+									</div>
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-success ">Envoyer</button>
+									</div>
+								</div>
+								{{ form_end(form) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</p>
+</div>{% endblock %}{% block javascripts %}
+<script>
+	// #annonce_contact_title récupérer dans l'inspecteur
 window.onload = () => {
 document.querySelector("#annonce_contact_title").value = "{{ annonce.title|raw }}";
 }
-	</script>
-{% endblock %}
+</script>{% endblock %}

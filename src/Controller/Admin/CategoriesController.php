@@ -45,7 +45,8 @@ class CategoriesController extends AbstractController
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirectToRoute('admin_home');
+            $this->addFlash('message', "La catégorie à bien été ajoutée");
+            return $this->redirectToRoute('admin_categories_home');
         }
         return $this->render('admin/categories/ajout.html.twig', [
             'form' => $form->createView()
