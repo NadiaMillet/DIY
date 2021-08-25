@@ -4,49 +4,100 @@
 {% endblock %}
 
 {% block body %}
-	{{ parent() }}
-	{# {% form_theme form 'bootstrap_4_layout.html.twig' %}
-			{{ form(form)}} #}
-	{% for message in app.flashes('message') %}
-		<div class="alert alert-secondary" role="alert">{{ message }}</div>
-	{% endfor %}
-	{% for annonce in annonces %}
-		<div class="card" style="width: 18rem;">
-			<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
-			<div class="card-body">
-				<h5 class="card-title">{{annonce.title }}</h5>
-				<p class="card-text">Catégories :
-					{{ annonce.categories }}</p>
-				<p class="card-text">{{ annonce.content|u.truncate(100, '...')|raw  }}</p>
+	<img
+	src="{{asset('/images-diy/banniere.PNG') }}" class="img-fluid" alt="...">
 
+	<!-- FORMULAIRE DE RECHERHCE -->
+	<div class="accueil-recherche">
+		{{ parent() }}
+	</div>
+</div>
+<!-- FIN FORMULAIRE DE RECHERCHE -->
 
-				{% if is_granted("ROLE_USER") %}
-					{% for favoris in annonce.favoris %}
-						{% if favoris.id == app.user.id %}
-							<p class="card-text">
-								<a href="{{ path('annonces_retrait_favoris', {id: annonce.id}) }}">
-									<i class='bx bxs-heart'></i>
-								</a>
-							</p>
-						{% else %}
-							<p class="card-text">
-								<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
-									<i class='bx bx-heart'></i>
-								</a>
-							</p>
-						{% endif %}
-
-					{% else %}
-						<p class="card-text">
-							<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
-								<i class='bx bx-heart'></i>
-							</a>
-						</p>
-					{% endfor %}
-				{% endif %}
-				<a href="{{path('annonces_details' , {slug: annonce.slug}) }}" class="btn btn-primary">DIY!</a>
+<!-- SECTION BIENVENU -->
+<div class="container section_bienvenue">
+	<h1 class="text-center">Bienvenue</h1>
+	<h3 class="categorie_title text-center">" La créativité c’est percer le banal pour trouver le merveilleux. "</h3>
+	<h4 class="categorie_title text-center">-Bill Moyers</h4>
+	<div class="row card-bienvenue mt-5">
+		<div class="col-sm-6">
+			<div
+				class="card">
+				{# <img src="{{ asset('images-diy/prof.jpg')}}" class="card-img-top" alt="..."> #}
+				<div class="card-body text-center">
+					<h5 class="card-title">Proposer un atelier</h5>
+					<p class="card-text">Partagez votre passion et votre savoir faire avec la communauté DIY!</p>
+					<a href="{{ path('app_register')}}" class="btn btn-front">S'inscrire</a>
+				</div>
 			</div>
 		</div>
-	{% endfor %}
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body text-center">
+					<h5 class="card-title">Trouver un atelier</h5>
+					<p class="card-text">Faites parler votre créativité grâce aux ateliers DIY!</p>
+					<a href="{{ path('annonces_liste') }}" class="btn btn-front">Do It Yourself!</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- FIN SECTION BIENVENU -->
 
-{% endblock %}
+<!-- APERCU ANNONCES CARDS -->
+<div class="container apercu_annonce mt-5">
+	<div class="row">
+		<h1 class="text-center">Nouveautés</h1>
+		<h3 class="categorie_title text-center">Laissez vous inspirer par les derniers ateliers mis en ligne
+		</h3>
+		<div class="d-flex flex-row justify-content-center flex-wrap ">
+			{% for annonce in annonces %}
+				<div class="card col-lg-3 col-md-6 col-sm-6 col-xs-6 my-3 m-2 text-center">
+					<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
+					<div class="card-body">
+						<h5 class="card-title">{{annonce.title }}</h5>
+						<p class="card-text-categorie">Catégorie :
+							{{ annonce.categories }}
+						</p>
+						<p class="card-text">
+							{{ annonce.content|u.truncate(100, '...')|raw  }}
+						</p>
+						<p class="card-text text-center">
+							<a href="{{path('annonces_details' , {slug: annonce.slug}) }}" class="btn btn-front">
+								DIY!
+							</a>
+							<!-- AJOUT AU FAVORIS -->
+							{% if is_granted("ROLE_USER") %}
+								{% for favoris in annonce.favoris %}
+									{% if favoris.id == app.user.id %}
+										<a href="{{ path('annonces_retrait_favoris', {id: annonce.id}) }}">
+											<i class="far fa-heart"></i>
+										</a>
+									{% else %}
+										<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+											<i class="fas fa-heart"></i>
+										</a>
+									{% endif %}
+								{% else %}
+									<a href="{{ path('annonces_ajout_favoris', {id: annonce.id}) }}">
+										<i class="fas fa-heart"></i>
+									</a>
+								{% endfor %}
+							{% endif %}
+						</p>
+						<!-- FIN AJOUT AU FAVORIS -->
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<!-- FIN APERCU ANNONCES CARDS -->
+
+
+{% block javascripts %}
+	<script>
+		let ajoutClassRow = document.getElementById('recherche');
+ajoutClassRow.classList.add('row', 'test');
+	</script>
+{% endblock %}{% endblock %}

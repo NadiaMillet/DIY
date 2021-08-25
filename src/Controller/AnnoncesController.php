@@ -56,7 +56,7 @@ class AnnoncesController extends AbstractController
             $data,
             // Cherche dans la requête un integer stocké dans ce qui va s'appeler 'page'
             $request->query->getInt('page', 1),
-            1
+            3
 
         );
 

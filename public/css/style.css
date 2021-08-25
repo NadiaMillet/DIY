@@ -7,7 +7,7 @@
 
 /******** COMMUN ********/
 header{
-    margin-bottom: 55px;
+    margin-bottom: 73px;
 }
 h1{
     font-family: 'Lily Script One', cursive;
@@ -45,7 +45,17 @@ p{
     border-radius: 0px;
     margin-bottom: 5px;
 }
-
+/******** NAVBAR *********/
+.navbar{
+    background-color: var(--lightbeige);
+}
+.navbar-brand img{
+    width: 75px;
+}
+.navbar-light .navbar-toggler {
+    color: rgb(0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+}
 /******** /ANNONCES ******/
 
 /* Page de Vue détaillée des annonces */
@@ -99,4 +109,37 @@ color: var(--turquoise);
     background-image: url('../images-diy/peinture.png');
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+}
+
+/* Page /index */
+
+/* Formulaire de recherche*/
+.accueil-recherche{
+    background-color: var(--turquoise);
+    padding: 36px;
+}
+.test .form-group:nth-child(1){
+  width: 45%;
+}
+.test .form-group:nth-child(2){
+    width: 45%;  
+}
+.test .form-group:nth-child(3){
+    width: 10%;  
+}
+
+/* Section bienvenue */
+.section_bienvenue{
+    margin-top: 150px;
+    margin-bottom: 150px;
+    background-image: url("../images-diy/bg-section-bienvenue-diy.png");
+    background-position: right;
+}
+
+/* Dernières annonces "Nouveautés" */
+.apercu_annonce{
+    background-image: url("../images-diy/bg-apercu-annonce-diy.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

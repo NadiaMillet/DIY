@@ -16,21 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DiyController extends AbstractController
 {
-    // /**
-    //  * @Route("/", name="app_home")
-    //  */
-    // public function index()
-    // {
-
-
-    //     // if ($form->isSubmitted() && $form->isValid()) {}
-
-
-    //     return $this->render('diy/index.html.twig', []);
-    // }
-
-    // Affichage des 8 dernières annonces à l'accueil
-    // Gestion formulaire de recherche
 
     /**
      * @Route("/", name="app_home")
@@ -63,9 +48,7 @@ class DiyController extends AbstractController
         return $this->render('diy/index.html.twig', ['annonces' => $annonces, 'form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/a", name="home")
-     */
+
     public function recherche(Request $request, AnnoncesRepository $annoncesRepository)
     {
         // $repository = variable par défaut symfony visant la class voulu
@@ -74,7 +57,7 @@ class DiyController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Annonces::class);
         // a ce stade il a accès au données
         // je veux stocker dans la variable $selections TOUT mes selections
-        $annonces = $annoncesRepository->findBy(['active' => true], ['created_at' => 'desc'], 8);
+        $annonces = $annoncesRepository->findBy(['active' => true], ['created_at' => 'desc'], 6);
         //La méthode findAll() retourne toutes les entités. Le format du retour est un simple Array, que vous pouvez parcourir (avec un foreach par exemple) pour utiliser les objets qu'il contient
         // entre guillmet c'est le nom utilisé sur Twig
 

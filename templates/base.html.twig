@@ -10,9 +10,8 @@
 			<link rel="preconnect" href="https://fonts.googleapis.com">
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 			<link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Montserrat:wght@400&family=Poiret+One&display=swap" rel="stylesheet">
-			<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-			{# <link href="{{ asset('images/logo1.jpg') }}" rel="icon" type="image/x-icon"/> #}
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+			<link href="{{ asset('/images-diy/diy-logo.png') }}" rel="icon" type="image/x-icon"/>
 			<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css' rel='stylesheet'>
 			<link href="{{asset('/css/style.css') }}" rel="stylesheet" media="all">
 		{% endblock %}
@@ -22,13 +21,13 @@
 
 	<body>
 		<header>
-			<nav class="navbar navbar-light bg-light fixed-top">
+			<nav class="navbar navbar-light fixed-top">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="{{ path('app_home') }}">DIY!</a>
+					<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{asset('/images-diy/diy_logo.png') }}" alt="logo diy!"></a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">DIY!</h5>
 							<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -39,7 +38,7 @@
 									<a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Accueil</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Link</a>
+									<a class="nav-link" href="{{ path('annonces_liste') }}">Ateliers</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
@@ -98,8 +97,10 @@
 		</header>
 		<main>
 			{% block body %}
-				{% form_theme form 'bootstrap_4_layout.html.twig' %}
-				{{ form(form)}}{% endblock %}
+				<div class="formulaire-recherche">
+					{% form_theme form 'bootstrap_4_layout.html.twig' %}
+					{{ form(form)}}{% endblock %}
+				</div>
 			</main>
 			<footer>
 				<!-- Remove the container if you want to extend the Footer to full width. -->

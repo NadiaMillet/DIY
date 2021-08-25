@@ -16,8 +16,8 @@ liip_imagine:
                     size: [55, 55]
                     mode: outbound
         banniere:
-            quality: 80
+            quality: 100
             filters:
-                thumbnail:
-                    size: [1000, 600]
-                    mode: outbound
+                upscale:
+                    min: [800, 400]
+                    mode: inset
