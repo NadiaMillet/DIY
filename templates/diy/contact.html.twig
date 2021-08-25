@@ -4,18 +4,23 @@
 {% endblock %}
 
 {% block body %}
-	<div class="mt-5">
-		{% form_theme form 'bootstrap_4_layout.html.twig' %}
-
-		<h5 class="text-center my-5">Contacter DIY!</h5>
-
-		<div class="container-fluid d-flex justify-content-center mb-5 formulaire-contact">
-			<div class="border border-secondary p-5 col-8">
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+	<div class="container mb-5 ">
+		<div class="row contact">
+			<div class="col-lg-6 col-sm-12 formulaire-contact">
 				{% for message in app.flashes('message') %}
-					<div class="alert alert-success" role="alert">{{ message }}</div>
+					<div class="alert alert-success" role="alert">
+						{{ message }}
+					</div>
 				{% endfor %}
+				<h1>Contactez-Nous</h1>
 				{{ form(form)}}
 					{{ form_end(form) }}
 				</div>
+				<div
+					class="col-lg-6 col-sm-12 img-contact">{# <img src="{{asset('images-diy/peinture.png') }}" alt="" class="img-fluid"> #}
+				</div>
 			</div>
-		{% endblock %}
+		</div>
+	</div>
+{% endblock %}

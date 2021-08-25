@@ -1,11 +1,14 @@
 /******** VARIABLES *****/
 :root{
        --turquoise: rgb(134, 175, 172);
+       --lightbeige: #FAF6F0;
 }
  
 
 /******** COMMUN ********/
-
+header{
+    margin-bottom: 55px;
+}
 h1{
     font-family: 'Lily Script One', cursive;
     font-size: 60px;
@@ -43,7 +46,7 @@ p{
     margin-bottom: 5px;
 }
 
-/******** ANNONCES ******/
+/******** /ANNONCES ******/
 
 /* Page de Vue détaillée des annonces */
 .categorie_title{
@@ -78,4 +81,22 @@ color: var(--turquoise);
 }
 .card-text{
     font-size: 15px;
+}
+
+/******** /DIY ******/
+
+/* Page contact */
+.contact{
+    margin-top:100px;
+}
+.formulaire-contact{
+    padding: 75px;
+    background-color: var(--lightbeige);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.img-contact{
+    background-image: url('../images-diy/peinture.png');
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
