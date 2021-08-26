@@ -15,6 +15,13 @@ liip_imagine:
                 thumbnail:
                     size: [55, 55]
                     mode: outbound
+
+        card:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [250, 190]
+                    mode: outbound
         banniere:
             quality: 100
             filters:

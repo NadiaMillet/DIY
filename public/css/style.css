@@ -153,3 +153,8 @@ color: var(--turquoise);
 .register_form .btn-envoyer {
     margin-top: 25px;
 }
+
+/******** /UNSERS/ANNONCES *********/
+.step-img{
+    background-image: url(../images-diy/etapes-add-ad.png);  
+}

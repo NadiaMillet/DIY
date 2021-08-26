@@ -4,23 +4,15 @@
 {% endblock %}
 
 
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-	<h1>Ajouter une annonce</h1>
-	{{ form(form) }}
-
-
-		<h2>Images</h2>
-		{% for annonces in annonce %}
-			<div>
-				<div class="col"><img src="{{asset('/uploads/images/' ~ annonce.img1) }}" class="img-thumbnail" alt="..."></div>
-				<div class="col"><img src="{{asset('/uploads/images/' ~ annonce.img2) }}" class="img-thumbnail" alt="..."></div>
-				<div class="col"><img src="{{asset('/uploads/images/' ~ annonce.img3) }}" class="img-thumbnail" alt="..."></div>
-			</div>
-		{% endfor %}
-
-
-	{% endblock %}
-	{% block javascripts %}
-		<script src="{{asset('/js/supprimerimage.js') }}"></script>
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+	<div class="ad_add_form container ">
+		<h1 class="text-center mb-3">Ajouter une annonce</h1>
+		<h3 class="categorie_title text-center">Partagez votre passion et votre savoir faire avec la communauté DIY!
+		</h3>
+		<div class="d-flex justify-content-center">
+			<img src="{{ asset('images-diy/etapes-add-ad.png') }}" alt="illustration étape mise en ligne atelier créative" class="img-fluid col-6">
+		</div>
+		{{ form(form) }}
+		</div>
 	{% endblock %}

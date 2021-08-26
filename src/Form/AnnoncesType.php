@@ -19,10 +19,27 @@ class AnnoncesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('content', CKEditorType::class)
+            ->add('title', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Titre',
+                    'class' => 'form-group'
+                ]
+            ])
+            ->add('content', CKEditorType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Description',
+                    'class' => 'form-group mt-3'
+                ]
+            ])
             ->add('categories', EntityType::class, [
-                'class' => Categories::class
+                'class' => Categories::class,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Catégorie',
+                    'class' => 'form-group mt-3'
+                ]
             ])
             ->add(
                 'img1',
@@ -39,12 +56,22 @@ class AnnoncesType extends AbstractType
                     //     ]
                     // ]
 
-                    'label' => "Ajouter l'image de mise en avant"
+                    'label' => false
                 ]
             )
-            ->add('img2', FileType::class, array('data_class' => null), ['label' => 'Ajouter une seconde image'])
-            ->add('img3', FileType::class, array('data_class' => null), ['label' => 'Ajouter une troisième image'])
-            ->add('Valider', SubmitType::class);
+            ->add('img2', FileType::class, array('data_class' => null), [
+                'label' => false
+            ])
+
+            ->add('img3', FileType::class, array('data_class' => null), [
+                'label' => false
+            ])
+
+            ->add('Publier', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn-envoyer mt-3'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

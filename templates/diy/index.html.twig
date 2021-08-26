@@ -52,8 +52,8 @@
 		</h3>
 		<div class="d-flex flex-row justify-content-center flex-wrap ">
 			{% for annonce in annonces %}
-				<div class="card col-lg-3 col-md-6 col-sm-6 col-xs-6 my-3 m-2 text-center">
-					<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top" alt="{{annonce.title}}">
+				<div class="card col-lg-3 col-xs-12 my-3 m-2 text-center">
+					<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('square') }}" class="card-img-top img-fluid" alt="{{annonce.title}}">
 					<div class="card-body">
 						<h5 class="card-title">{{annonce.title }}</h5>
 						<p class="card-text-categorie">Catégorie :

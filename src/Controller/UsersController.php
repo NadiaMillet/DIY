@@ -74,8 +74,6 @@ class UsersController extends AbstractController
             return $this->redirectToRoute('users');
         }
 
-
-
         return $this->render('users/annonces/ajout.html.twig', [
             'annonce' => $annonce,
             'form' => $form->createView()
@@ -143,33 +141,33 @@ class UsersController extends AbstractController
     }
 
 
-    //////// Modifier profil utilisateur //////
+    // //////// Modifier profil utilisateur //////
 
-    /**
-     * @Route("/users/profil/edit", name="users_profil_modifier")
-     */
-    public function editerProfil(Request $request)
-    {
-        $user = $this->getUser();
-        $form = $this->createForm(EditProfileType::class, $user);
+    // /**
+    //  * @Route("/users/profil/edit", name="users_profil_modifier")
+    //  */
+    // public function editerProfil(Request $request)
+    // {
+    //     $user = $this->getUser();
+    //     $form = $this->createForm(EditProfileType::class, $user);
 
-        $form->handleRequest($request);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    //     if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+    //         $em = $this->getDoctrine()->getManager();
+    //         $em->persist($user);
+    //         $em->flush();
 
-            $this->addFlash('message', 'Votre profil à bien été mis à jour');
+    //         $this->addFlash('message', 'Votre profil à bien été mis à jour');
 
-            return $this->redirectToRoute('users');
-        }
+    //         return $this->redirectToRoute('users');
+    //     }
 
-        return $this->render('users/annonces/editeprofile.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
+    //     return $this->render('users/annonces/editeprofile.html.twig', [
+    //         'form' => $form->createView()
+    //     ]);
+    // }
 
     //////// Modifier mot de passe utilisateur //////
 

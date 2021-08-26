@@ -4,63 +4,63 @@
 {% endblock %}
 
 {% block body %}
-	<div class="mt-5">
-		{% for message in app.flashes('message') %}
-			<div class="alert alert-success" role="alert">{{ message }}</div>
-		{% endfor %}
-		{% for message in app.flashes('success') %}
-			<div class="alert alert-success" role="alert">{{ message }}</div>
-		{% endfor %}
-		<p>Nom :
-			{{ app.user.name }}</p>
-		<p>Prénom :
-			{{ app.user.firstname }}</p>
-		<p>E-mail :
-			{{ app.user.email }}</p>
-		<a href="{{ path('users_profil_modifier') }}" class="btn btn-secondary">Modifier le profil</a>
-		<a href="{{ path('users_mdp_modifier') }}" class="btn btn-secondary">Modifier le mot de passe</a>
-		<div>
-			<h2>Annonces de
-				{{ app.user.firstname }}
-				{{ app.user.name }}
-				({{ app.user.annonces|length }})</h2>
-		</div>
-		<a href="{{ path('users_annonces_ajout') }}" class="btn btn-success">Ajouter une annonce</a>
-		{% for annonce in app.user.annonces %}
-			<p>Titre :
-				{{ annonce.title }}</p>
-		{% endfor %}
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Titre</th>
-					<th scope="col">Catégorie</th>
-					<th scope="col">Content</th>
-					<th scope="col">Image</th>
-					<th scope="col">Action</th>
-				</tr>
-			</thead>
-			<tbody>
+	<div
+		class="container my-5">
+		<!-- ANNONCES USER -->
+		<div class="row">
+
+			<div
+				class="d-flex flex-row justify-content-center flex-wrap border border-secondary rounded-3 pt-3">
+				<!-- TITRE ET MESSAGE ALERTE -->
+				<div class="col-12 text-center">
+
+					{% for message in app.flashes('message') %}
+						<div class="alert alert-success" role="alert">{{ message }}</div>
+					{% endfor %}
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success" role="alert">{{ message }}</div>
+					{% endfor %}
+
+
+					<h3 class="categorie_title text-center">Mes annonces ({{ app.user.annonces|length }})</h3>
+					<a href="{{ path('users_annonces_ajout') }}" class="btn btn-envoyer">Ajouter une annonce</a>
+				</div>
+				<!-- FIN TITRE ET MESSAGE ALERTE -->
+				<!-- CARDS -->
 				{% for annonce in app.user.annonces %}
-					<tr>
-						<td>{{annonce.title}}</td>
-						<td>{{annonce.categories}}</td>
-						<td>{{annonce.content|u.truncate(100, '...')|raw  }}</td>
-
-						<td>
-
-							<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('mini') }}" class="card-img-top" alt="{{annonce.title}}">
-
-						</td>
-
-						<td class="text-center">
+					<div class="card col-lg-3 col-xs-12 my-3 m-2 text-center" style="width: 18rem;">
+						<img src="{{ asset('uploads/images/' ~ annonce.img1)|imagine_filter('card') }}" class="card-img-top" alt="{{annonce.title}}">
+						<div class="card-body">
+							<h5 class="card-title">{{annonce.title }}</h5>
+							<p class="card-text-categorie">Catégorie :
+								{{ annonce.categories }}
+							</p>
 							<a href="{{ path("users_annonces_editer", {id: annonce.id}) }}" class="btn btn-primary">Modifier</a>
-							<a href="{{ path("users_annonce_supprimer", {id: annonce.id}) }}" class="btn btn-danger">Supprimer</a>
-
-						</td>
-					</tr>
+							<a href="{{ path("users_annonce_supprimer", {id: annonce.id}) }}" class="btn btn-danger ">Supprimer</a>
+						</div>
+					</div>
 				{% endfor %}
-			</tbody>
-		</table>
+				<!-- FIN CARDS -->
+			</div>
+
+			<!-- INFO PROFIL -->
+			<div class="card profil_board my-5 p-3">
+				<h3 class="categorie_title text-center">Mon profil</h3>
+				<p>Nom :
+					{{ app.user.name }}</p>
+				<p>Prénom :
+					{{ app.user.firstname }}</p>
+				<p>E-mail :
+					{{ app.user.email }}</p>
+				{# <a href="{{ path('users_profil_modifier') }}" class="btn btn-secondary">Modifier le profil</a> #}
+				<div class="card-text">
+					<a href="{{ path('users_mdp_modifier') }}" class="btn btn-envoyer m-2">Modifier le mot de passe</a>
+					<a href="{{ path('users_annonces_ajout') }}" class="btn btn-envoyer m-2">Ajouter une annonce</a>
+				</div>
+			</div>
+			<!-- FIN INFO PROFIL -->
+		</div>
+		<!-- FIN ANNONCES USER -->
 	</div>
+
 {% endblock %}
