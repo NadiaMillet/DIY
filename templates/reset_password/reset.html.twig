@@ -1,12 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Reset your password
+{% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
+	{# <h1>Reset your password</h1>
+	
+		{{ form_start(resetForm) }}
+		{{ form_row(resetForm.plainPassword) }}
+		<button class="btn btn-primary">Reset password</button>
+		{{ form_end(resetForm) }} #}
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
-{% endblock %}
+	<div class="container d-flex flex-column align-items-center mb-5">
+		<h1 class="text-center mb-3">Modifier mot de passe</h1>
+		<h3 class="categorie_title text-center">Partagez votre passion et votre savoir faire avec la communauté DIY!
+		</h3>
+		<div class="register_form col-lg-6 col-sm-10 mt-3">
+			{% form_theme resetForm 'bootstrap_4_layout.html.twig' %}
+			{{ form(resetForm)}}
+				{{ form_end(resetForm) }}
+			</div>
+		</div>
+	{% endblock %}

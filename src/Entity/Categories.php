@@ -37,12 +37,12 @@ class Categories
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity=Categories::class, mappedBy="parent")
+     * @ORM\OneToMany(targetEntity=Categories::class, mappedBy="parent", cascade={"remove"})
      */
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Annonces::class, mappedBy="categories")
+     * @ORM\OneToMany(targetEntity=Annonces::class, mappedBy="categories", cascade={"remove"})
      */
     private $annonces;
 

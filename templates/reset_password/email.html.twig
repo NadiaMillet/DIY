@@ -1,9 +1,18 @@
-<h1>Hi!</h1>
+<h3>Réinitialisation de votre mot de passe</h3>
 
-<p>To reset your password, please visit the following link</p>
+<p>Pour réinitialiser votre mot de passe, cliquez sur le lien suivant :</p>
 
 <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
 
-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+<p>Ce lien exprirera dans
+	{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
 
-<p>Cheers!</p>
+<p>
+	<em>
+		<b>
+			Partagez votre passion et votre savoir faire avec la communauté DIY!</b>
+	</em>
+</p>
+<p>
+	<b>L'équipe DIY!</b>
+</p>
