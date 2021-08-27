@@ -2,6 +2,7 @@
 :root{
        --turquoise: rgb(134, 175, 172);
        --lightbeige: #FAF6F0;
+       --lightpink: #EDDAD1;
 }
  
 
@@ -56,6 +57,26 @@ p{
     color: rgb(0, 0, 0);
     border-color: rgba(0, 0, 0, 0);
 }
+.offcanvas.show{
+    background-color: var(--lightbeige);
+}
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: 0.5rem 15px;
+    margin: 0;
+        margin-top: 0px;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: var(--lightbeige);
+    background-clip: padding-box;
+    border: none;
+    border-radius: 0rem;
+}
 /******** /ANNONCES ******/
 
 /* Page de Vue détaillée des annonces */
@@ -105,6 +126,10 @@ color: var(--turquoise);
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
+.contact{
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+}
 .img-contact{
     background-image: url('../images-diy/peinture.png');
     border-top-right-radius: 20px;
@@ -118,15 +143,7 @@ color: var(--turquoise);
     background-color: var(--turquoise);
     padding: 36px;
 }
-.test .form-group:nth-child(1){
-  width: 45%;
-}
-.test .form-group:nth-child(2){
-    width: 45%;  
-}
-.test .form-group:nth-child(3){
-    width: 10%;  
-}
+
 
 /* Section bienvenue */
 .section_bienvenue{
@@ -141,7 +158,7 @@ color: var(--turquoise);
     background-image: url("../images-diy/bg-apercu-annonce-diy.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
 }
 
 /********** /REGISTRATION ********/
@@ -157,4 +174,52 @@ color: var(--turquoise);
 /******** /UNSERS/ANNONCES *********/
 .step-img{
     background-image: url(../images-diy/etapes-add-ad.png);  
+}
+
+/****** FOOTER *******/
+footer{
+    margin-top: 25px;
+    background-color: var(--lightbeige);
+}
+.footer_copyright{
+    background-color: var(--lightpink);
+}
+
+
+
+/******** MEDIA QUERIES *********/
+@media screen and (max-width: 576px ){
+    /* Section bienvenue */
+h1{
+    font-size: 50px;
+}
+}
+@media screen and (max-width: 992px ){
+    /* Section bienvenue */
+.section_bienvenue{
+    margin-top: 15px;
+}
+}
+@media screen and (min-width: 768px ){
+    .test .form-group:nth-child(1){
+        width: 45%;
+      }
+      .test .form-group:nth-child(2){
+          width: 45%;  
+      }
+      .test .form-group:nth-child(3){
+          width: 10%;  
+      }
+}
+
+@media screen and (min-width: 768px ) and (max-width: 1200px) {
+    .test .form-group:nth-child(1){
+        width: 40%;
+      }
+      .test .form-group:nth-child(2){
+          width: 40%;  
+      }
+      .test .form-group:nth-child(3){
+          width: 20%;  
+      }
 }
