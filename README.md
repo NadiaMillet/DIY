@@ -22,7 +22,7 @@ Méthode Agile :
 
 Fonctionnalités :
 - Inscription & connexion
-- Réintinitlisation mot de passe
+- Réinitialisation  mot de passe
 - Automatisations des dates et des slugs -> affichage dynamique des slugs dans les URLs
 - Espaces admin et utilisateur 
 - Gestion des annonces et des catégories
